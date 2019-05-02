@@ -1,9 +1,6 @@
 import readline from "readline";
-import { mapping, evaluateExpression } from "./mapper";
+import { mapping } from "./mapper";
 import { readFile, writeFile } from "./files";
-import postFixNotation from "./postfixCalculator";
-
-//console.log("Column Json file: ", columnsValues["a"]);
 
 const test = readline.createInterface({
   input: process.stdin,
@@ -11,19 +8,21 @@ const test = readline.createInterface({
 });
 
 test.question("Are you testing this application?", async res => {
-  const readData = await readFile(res);
-  const list = await postfixNotation(readData);
-  const mappedList = await mapping(list);
-
-  console.table(mappedList);
-  evaluateExpression(mappedList);
-  //console.log(`########: ${await postfixNotation(readData)}`);
-  //let writeData = await writeFile("output.csv", readData);
-  //console.log(`Data saved to output file: ${writeData.toString()}`);
-  test.close();
+  console.log("Question response type: ", typeof res);
+  try {
+    const readData = await readFile(res);
+    const list = await trimExpressions(readData);
+    const mappedList = await mapping(list);
+    let writeData = await writeFile("output.csv", mappedList);
+    console.table(writeData);
+    test.close();
+  } catch (e) {
+    console.error("Received Error response:", e);
+    process.exit(1);
+  }
 });
 
-const postfixNotation = expression => {
+const trimExpressions = expression => {
   return new Promise((resolve, reject) => {
     if (expression) {
       let splitdata = expression.toString().split("\r\n");

@@ -1,5 +1,6 @@
+// enable ES6 on the environment
+
 require("@babel/register");
 require("@babel/core");
-require("@babel/polyfill"); // If you use async and await
-// This is where our main application index path is
+require("@babel/polyfill");
 require("../index");

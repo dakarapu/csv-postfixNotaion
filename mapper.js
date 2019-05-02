@@ -1,4 +1,5 @@
 import fs from "fs";
+import os from "os";
 import postFixNotation from "./postfixCalculator";
 
 const columnsValues = JSON.parse(fs.readFileSync("./column.json").toString());
@@ -18,35 +19,32 @@ export const mapping = list => {
         let cellIndex = parseCellPosition(column);
         let flag = columnIndex;
         let columnEXP = "";
-        //console.log("This is column index: ", columnIndex);
         let singlevalues = column.split(" ");
         singlevalues.map((v, i) => {
           var regex = /^[a-z]/;
           var found = v.match(regex);
           if (found && found.length > 0) {
-            //console.log("singlevalues values: ", found);
             if (flag === columnIndex) {
-              columnEXP += postFixNotation(
-                list[cellIndex.row][cellIndex.column]
-              );
+              columnEXP += list[cellIndex.row][cellIndex.column];
             }
-            //console.log("columnEXP values: ", columnEXP);
-            //row.splice(columnIndex, 1, list[cellIndex.row][cellIndex.column]);
             row.splice(columnIndex, 1, columnEXP);
           }
         });
       });
     });
-    resolve(list);
+    let x = evaluateExpression(list);
+    resolve(x);
   });
 };
 
 export const evaluateExpression = mappedList => {
-  mappedList.map(v => {
-    v.map(v1 => {
-      //console.log("Expression: ", v1);
+  mappedList.map((v, index) => {
+    v.map((v1, i) => {
       let check = postFixNotation(v1);
       console.log(`POLISH CALC for ${v1}: `, check);
+      v.splice(i, 1, check);
     });
+    mappedList.splice(index, 1, "\r\n" + v);
   });
+  return mappedList;
 };

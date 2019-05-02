@@ -1,31 +1,22 @@
 const postFixNotation = expr => {
-  //expr = "3 11 + 3 11 +";
-  //console.log("EXP to POSTFIX NOTATION FUNCTION: ", expr);
   if (expr === "" || typeof expr !== "string") {
-    return "#ERR";
+    return;
   }
-  var ar = expr.split(/\s+/),
-    st = [],
-    token;
-  while ((token = ar.shift())) {
+  let arg = expr.split(/\s+/);
+  let stArr = [];
+  let token;
+  while ((token = arg.shift())) {
     if (token == +token) {
-      // numeric
-      st.push(token);
+      stArr.push(token);
     } else {
-      var n2 = st.pop(),
-        n1 = st.pop();
-      st.push(eval(n1 + token + " " + n2));
+      let num2 = stArr.pop();
+      let num1 = stArr.pop();
+      stArr.push(eval(num1 + token + " " + num2));
     }
   }
 
-  let result = Number(st.pop());
-
-  if (result === NaN) {
-    //console.log("EXP to POSTFIX NOTATION FUNCTION: ", expr);
-    return "#ERR";
-  } else {
-    return result;
-  }
+  let result = Number(stArr.pop());
+  return isNaN(result) ? "#ERR" : result;
 };
 
 export default postFixNotation;
