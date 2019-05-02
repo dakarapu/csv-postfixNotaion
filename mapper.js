@@ -11,9 +11,22 @@ const parseCellPosition = cellPosition => {
   return { column, row };
 };
 
+export const trimExpressions = expression => {
+  return new Promise((resolve, reject) => {
+    if (expression) {
+      let splitdata = expression.toString().split("\r\n");
+      splitdata.map((v, i) => {
+        splitdata.splice(i, 1, v.split(","));
+      });
+      resolve(splitdata);
+    } else if (!expression || expression === "" || expression === undefined) {
+      reject("No expression found");
+    }
+  });
+};
+
 export const mapping = list => {
   return new Promise((resolve, reject) => {
-    console.table(list);
     list.map((row, rowIndex) => {
       row.map((column, columnIndex) => {
         let cellIndex = parseCellPosition(column);
@@ -32,8 +45,12 @@ export const mapping = list => {
         });
       });
     });
-    let x = evaluateExpression(list);
-    resolve(x);
+    console.log(
+      "******************** Input Evaluated Into PFN *********************"
+    );
+    console.table(list);
+    let res = evaluateExpression(list);
+    resolve(res);
   });
 };
 
@@ -41,7 +58,6 @@ export const evaluateExpression = mappedList => {
   mappedList.map((v, index) => {
     v.map((v1, i) => {
       let check = postFixNotation(v1);
-      console.log(`POLISH CALC for ${v1}: `, check);
       v.splice(i, 1, check);
     });
     mappedList.splice(index, 1, "\r\n" + v);
