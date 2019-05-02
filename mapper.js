@@ -15,13 +15,24 @@ export const mapping = list => {
     console.table(list);
     list.map((row, rowIndex) => {
       row.map((column, columnIndex) => {
-        let singlevalues = column.split("");
+        let cellIndex = parseCellPosition(column);
+        let flag = columnIndex;
+        let columnEXP = "";
+        //console.log("This is column index: ", columnIndex);
+        let singlevalues = column.split(" ");
         singlevalues.map((v, i) => {
           var regex = /^[a-z]/;
           var found = v.match(regex);
           if (found && found.length > 0) {
-            let cellIndex = parseCellPosition(column);
-            row.splice(columnIndex, 1, list[cellIndex.row][cellIndex.column]);
+            //console.log("singlevalues values: ", found);
+            if (flag === columnIndex) {
+              columnEXP += postFixNotation(
+                list[cellIndex.row][cellIndex.column]
+              );
+            }
+            //console.log("columnEXP values: ", columnEXP);
+            //row.splice(columnIndex, 1, list[cellIndex.row][cellIndex.column]);
+            row.splice(columnIndex, 1, columnEXP);
           }
         });
       });
@@ -33,29 +44,9 @@ export const mapping = list => {
 export const evaluateExpression = mappedList => {
   mappedList.map(v => {
     v.map(v1 => {
-      console.log("Expression: ", v1);
-      let check = calc(v1);
-      console.log("POLISH CALC: ", check);
+      //console.log("Expression: ", v1);
+      let check = postFixNotation(v1);
+      console.log(`POLISH CALC for ${v1}: `, check);
     });
   });
 };
-
-function calc(expr) {
-  if (expr === "" || typeof expr !== "string") {
-    return "#ERR";
-  }
-  var ar = expr.split(/\s+/),
-    st = [],
-    token;
-  while ((token = ar.shift())) {
-    if (token == +token) {
-      // numeric
-      st.push(token);
-    } else {
-      var n2 = st.pop(),
-        n1 = st.pop();
-      st.push(eval(n1 + token + " " + n2));
-    }
-  }
-  return Number(st.pop());
-}

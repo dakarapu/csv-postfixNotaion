@@ -15,11 +15,11 @@ test.question("Are you testing this application?", async res => {
   const list = await postfixNotation(readData);
   const mappedList = await mapping(list);
 
+  console.table(mappedList);
   evaluateExpression(mappedList);
   //console.log(`########: ${await postfixNotation(readData)}`);
   //let writeData = await writeFile("output.csv", readData);
   //console.log(`Data saved to output file: ${writeData.toString()}`);
-  console.table(mappedList);
   test.close();
 });
 
