@@ -1,6 +1,6 @@
 import readline from "readline";
-import { mapping, trimExpressions } from "./mapper";
-import { readFile, writeFile } from "./files";
+import { mapping, trimExpressions } from "./src/helpers/mapper";
+import { readFile, writeFile } from "./src/helpers/files";
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -34,18 +34,3 @@ rl.question(
     }
   }
 );
-
-// const trimExpressions = expression => {
-//   return new Promise((resolve, reject) => {
-//     if (expression) {
-//       console.log(`trimexpressions: ${expression}`);
-//       let splitdata = expression.toString().split("\r\n");
-//       splitdata.map((v, i) => {
-//         splitdata.splice(i, 1, v.split(","));
-//       });
-//       resolve(splitdata);
-//     } else if (!expression || expression === "" || expression === undefined) {
-//       reject("No expression found");
-//     }
-//   });
-// };

@@ -1,8 +1,9 @@
 import fs from "fs";
-import os from "os";
-import postFixNotation from "./postfixCalculator";
+import postFixNotation from "../postfixCalculator";
 
-const columnsValues = JSON.parse(fs.readFileSync("./column.json").toString());
+const columnsValues = JSON.parse(
+  fs.readFileSync(__dirname + "/column.json").toString()
+);
 
 const parseCellPosition = cellPosition => {
   let position = cellPosition.split("");
