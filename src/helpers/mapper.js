@@ -5,7 +5,7 @@ const columnsValues = JSON.parse(
   fs.readFileSync(__dirname + "/column.json").toString()
 );
 
-const parseCellPosition = cellPosition => {
+export const parseCellPosition = cellPosition => {
   let position = cellPosition.split("");
   let column = columnsValues[position[0]];
   let row = position[1] - 1;

@@ -5,8 +5,6 @@
   "main": "index.js",
   "scripts": {
     "start": "node bin/dev",
-    "build": "mkdir dist && babel src -s -d dist",
-    "dev": "nodemon --exec npm run babel-node -- ./index.js",
     "watch": "nodemon",
     "test": "jest"
   },
@@ -24,5 +22,11 @@
     "babel-preset-jest": "^24.6.0",
     "jest": "^24.7.1",
     "nodemon": "^1.19.0"
+  },
+  "jest": {
+    "verbose": true,
+    "transform": {
+      "^.+\\.jsx?$": "babel-jest"
+    }
   }
 }
