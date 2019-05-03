@@ -4,7 +4,7 @@ import postFixNotation from "../postfixCalculator";
 const columnsValues = JSON.parse(
   fs.readFileSync(__dirname + "/column.json").toString()
 );
-
+const regex = /^[a-z]/;
 export const parseCellPosition = cellPosition => {
   let position = cellPosition.split("");
   let column = columnsValues[position[0]];
@@ -26,42 +26,51 @@ export const trimExpressions = expression => {
   });
 };
 
-export const mapping = list => {
+export const mapping = wholeSheet => {
   return new Promise((resolve, reject) => {
-    list.map((row, rowIndex) => {
-      row.map((column, columnIndex) => {
-        let cellIndex = parseCellPosition(column);
-        let flag = columnIndex;
-        let columnEXP = "";
-        let singlevalues = column.split(" ");
-        singlevalues.map((v, i) => {
-          var regex = /^[a-z]/;
-          var found = v.match(regex);
-          if (found && found.length > 0) {
-            if (flag === columnIndex) {
-              columnEXP += list[cellIndex.row][cellIndex.column];
-            }
-            row.splice(columnIndex, 1, columnEXP);
-          }
+    let count = 0;
+    while (count < 3) {
+      wholeSheet.forEach(rows => {
+        rows.forEach((exp, i) => {
+          let count = 0;
+          do {
+            let result = evaluateExpression(wholeSheet, exp);
+            let x = result.replace(/,/g, " ");
+            rows[i] = x;
+            count++;
+          } while (count < 3);
         });
       });
+      count++;
+    }
+
+    console.log(wholeSheet);
+
+    let resp = [];
+    let ex = [];
+    wholeSheet.forEach(rows => {
+      rows.forEach((exp, i) => {
+        ex.push(postFixNotation(exp));
+      });
     });
-    console.log(
-      "******************** Input Evaluated Into PFN *********************"
-    );
-    console.table(list);
-    let res = evaluateExpression(list);
-    resolve(res);
+    resp.push(ex);
+
+    console.table(resp);
+    resolve(resp);
   });
 };
 
-export const evaluateExpression = mappedList => {
-  mappedList.map((v, index) => {
-    v.map((v1, i) => {
-      let check = postFixNotation(v1);
-      v.splice(i, 1, check);
-    });
-    mappedList.splice(index, 1, "\r\n" + v);
+function evaluateExpression(wholeSheet, str) {
+  let arr1 = str.split(" ");
+  let arr2 = [];
+
+  arr1.forEach(e => {
+    if (e.match(regex)) {
+      let dim = parseCellPosition(e);
+      arr2.push(wholeSheet[dim.row][dim.column]);
+    } else {
+      arr2.push(e);
+    }
   });
-  return mappedList;
-};
+  return arr2.join();
+}
