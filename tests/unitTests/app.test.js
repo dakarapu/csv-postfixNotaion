@@ -1,9 +1,17 @@
 jest.mock("../../src/app"); // this happens automatically with automocking
-import app from "../../src/app";
+jest.mock("../../src/helpers/mapper");
+jest.mock("../../src/helpers/files");
+
+import "@babel/polyfill";
+
+//import app from "../../src/app";
+//import { mapping, trimExpressions } from "../../src/helpers/mapper";
+import { readFile, writeFile } from "../../src/helpers/files";
 
 describe("app - Unit Test", () => {
-  it("Successfull app function", () => {
-    const data = app();
-    expect(app.mock.calls.length).toBe(1);
+  it("works with async/await", async () => {
+    expect.assertions(1);
+    const data = await readFile("input.csv");
+    expect(data).toBeInstanceOf(Buffer);
   });
 });

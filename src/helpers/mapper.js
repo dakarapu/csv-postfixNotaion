@@ -1,4 +1,5 @@
 import fs from "fs";
+import "@babel/polyfill";
 import postFixNotation from "../postfixCalculator";
 
 const columnsValues = JSON.parse(

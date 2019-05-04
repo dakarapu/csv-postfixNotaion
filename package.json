@@ -33,7 +33,16 @@
       "**/*.{js,jsx}",
       "!**/node_modules/**",
       "!**/coverage/**",
-      "!**/bin/**"
-    ]
+      "!**/bin/**",
+      "!**/index.js"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 60,
+        "functions": 80,
+        "lines": 70,
+        "statements": 5
+      }
+    }
   }
 }

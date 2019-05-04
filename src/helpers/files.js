@@ -1,4 +1,5 @@
 import fs from "fs";
+import "@babel/polyfill";
 
 export const readFile = filename => {
   return new Promise((resolve, reject) => {

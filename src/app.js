@@ -12,6 +12,7 @@ const app = async () => {
     console.table(list);
     const mappedList = await mapping(list);
     let writeData = "";
+    console.log("mappedList", mappedList);
     mappedList.forEach(async element => {
       writeData += element + "\r\n";
     });
