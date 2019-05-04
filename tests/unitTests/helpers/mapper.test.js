@@ -1,8 +1,7 @@
 import {
   trimExpressions,
   parseCellPosition,
-  mapping,
-  evaluateExpression
+  mapping
 } from "../../../src/helpers/mapper";
 
 describe("Mapper - Unit Test", () => {
@@ -34,20 +33,47 @@ describe("Mapper - Unit Test", () => {
     expect(data).toHaveProperty("column");
   });
 
-  // it("Successfull evaluateExpression function", () => {
-  //   const data = evaluateExpression(evaExp);
-  //   expect(data.length).toBe(5);
-  // });
-
   it("Successfull mapping function", () => {
     return mapping(map).then(res => {
       expect(res).toHaveLength(5);
     });
   });
 
+  it("should trow error when empty expression string passed", async () => {
+    try {
+      await mapping([]);
+    } catch (e) {
+      expect(e).toBe("No data received for mapping");
+    }
+  });
+
+  it("should trow error when no expression string passed", async () => {
+    try {
+      await mapping(null);
+    } catch (e) {
+      expect(e).toBe("No data received for mapping");
+    }
+  });
+
   it("should return expected data", () => {
     return trimExpressions(buf).then(res => {
       expect(res.length).toBe(1);
     });
+  });
+
+  it("should trow error when no expression string passed", async () => {
+    try {
+      await trimExpressions(undefined);
+    } catch (e) {
+      expect(e).toBe("No expression found");
+    }
+  });
+
+  it("should trow error when no expression string passed", async () => {
+    try {
+      await trimExpressions(null);
+    } catch (e) {
+      expect(e).toBe("No expression found");
+    }
   });
 });

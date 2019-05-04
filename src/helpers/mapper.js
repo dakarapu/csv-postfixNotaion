@@ -15,21 +15,25 @@ export const parseCellPosition = cellPosition => {
 
 export const trimExpressions = expression => {
   return new Promise((resolve, reject) => {
-    if (expression) {
+    if (
+      !expression ||
+      typeof expression === null ||
+      typeof expression === undefined
+    ) {
+      reject("No expression found");
+    } else {
       let splitdata = expression.toString().split("\r\n");
       splitdata.map((v, i) => {
         splitdata.splice(i, 1, v.split(","));
       });
       resolve(splitdata);
-    } else if (!expression || expression === "" || expression === undefined) {
-      reject("No expression found");
     }
   });
 };
 
 export const mapping = wholeSheet => {
   return new Promise((resolve, reject) => {
-    if (!wholeSheet && wholeSheet.length < 1) {
+    if (!wholeSheet || wholeSheet.length < 1) {
       reject("No data received for mapping");
     }
     let counter1 = 0;

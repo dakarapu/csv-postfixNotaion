@@ -26,4 +26,12 @@ describe("Files - Unit Test", () => {
       expect(res).toHaveLength(5);
     });
   });
+
+  it("writeFile should throw error for no filename as input", async () => {
+    try {
+      await writeFile("", req);
+    } catch (e) {
+      expect(e).toHaveProperty("path", "");
+    }
+  });
 });
