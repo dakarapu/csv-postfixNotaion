@@ -17,7 +17,7 @@ describe("Files - Unit Test", () => {
   ];
   it("readFile should successfully read input file", () => {
     return readFile("./input.csv").then(res => {
-      expect(res).toHaveLength(94);
+      expect(res).toHaveLength(93);
     });
   });
 

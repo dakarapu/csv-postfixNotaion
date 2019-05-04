@@ -34,10 +34,10 @@ describe("Mapper - Unit Test", () => {
     expect(data).toHaveProperty("column");
   });
 
-  it("Successfull evaluateExpression function", () => {
-    const data = evaluateExpression(evaExp);
-    expect(data.length).toBe(5);
-  });
+  // it("Successfull evaluateExpression function", () => {
+  //   const data = evaluateExpression(evaExp);
+  //   expect(data.length).toBe(5);
+  // });
 
   it("Successfull mapping function", () => {
     return mapping(map).then(res => {
