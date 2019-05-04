@@ -10,18 +10,18 @@ const app = async () => {
       "\n******************** Input Received *********************\n"
     );
     console.table(list);
+
     const mappedList = await mapping(list);
     let writeData = "";
-    console.log("mappedList", mappedList);
     mappedList.forEach(async element => {
       writeData += element + "\r\n";
     });
     let result = await writeFile(process.argv[3], writeData);
+
     console.log(
       "\n******************** Final Response *********************\n"
     );
     console.table(result);
-    //return result;
   } catch (e) {
     console.error("Received Error response:", e);
     process.exit(1);
@@ -29,4 +29,3 @@ const app = async () => {
 };
 
 export default app;
-//app();
