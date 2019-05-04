@@ -44,19 +44,13 @@ export const mapping = wholeSheet => {
       count++;
     }
 
-    console.log(wholeSheet);
-
-    let resp = [];
-    let ex = [];
-    wholeSheet.forEach(rows => {
+    wholeSheet.forEach((rows, ri) => {
       rows.forEach((exp, i) => {
-        ex.push(postFixNotation(exp));
+        rows[i] = postFixNotation(exp);
       });
+      wholeSheet[ri] = rows;
     });
-    resp.push(ex);
-
-    console.table(resp);
-    resolve(resp);
+    resolve(wholeSheet);
   });
 };
 

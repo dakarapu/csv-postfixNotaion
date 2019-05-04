@@ -1,36 +1,24 @@
-import readline from "readline";
 import { mapping, trimExpressions } from "./src/helpers/mapper";
 import { readFile, writeFile } from "./src/helpers/files";
 
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout
-});
-
-rl.question(
-  "Please enter your input and output filenames seperated by space: ",
-  async res => {
-    if (res) {
-      const filenames = res.split(" ");
-      try {
-        const readData = await readFile(filenames[0]);
-        const list = await trimExpressions(readData);
-        console.log("\n");
-        console.log(
-          "******************** Input Received *********************"
-        );
-        console.table(list);
-        const mappedList = await mapping(list);
-        let writeData = await writeFile(filenames[1], mappedList);
-        console.log(
-          "******************** Final Response *********************"
-        );
-        console.table(writeData);
-        rl.close();
-      } catch (e) {
-        console.error("Received Error response:", e);
-        process.exit(1);
-      }
-    }
+const app = async () => {
+  try {
+    const readData = await readFile(process.argv[2]);
+    const list = await trimExpressions(readData);
+    console.log("\n******************** Input Received *********************");
+    console.table(list);
+    const mappedList = await mapping(list);
+    let writeData = "";
+    mappedList.forEach(async element => {
+      writeData += element + "\r\n";
+    });
+    let result = await writeFile(process.argv[3], writeData);
+    console.log("******************** Final Response *********************");
+    console.table(result);
+  } catch (e) {
+    console.error("Received Error response:", e);
+    process.exit(1);
   }
-);
+};
+
+app();

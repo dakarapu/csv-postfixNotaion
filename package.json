@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node bin/dev",
+    "start": "node bin/dev input.csv output.csv",
     "watch": "nodemon",
     "test": "jest"
   },
