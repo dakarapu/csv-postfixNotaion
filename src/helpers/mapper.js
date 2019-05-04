@@ -28,20 +28,23 @@ export const trimExpressions = expression => {
 
 export const mapping = wholeSheet => {
   return new Promise((resolve, reject) => {
-    let count = 0;
-    while (count < 3) {
+    if (!wholeSheet && wholeSheet.length < 1) {
+      reject("No data received for mapping");
+    }
+    let counter1 = 0;
+    while (counter1 < wholeSheet.length) {
       wholeSheet.forEach(rows => {
         rows.forEach((exp, i) => {
-          let count = 0;
+          let counter2 = 0;
           do {
             let result = evaluateExpression(wholeSheet, exp);
             let x = result.replace(/,/g, " ");
             rows[i] = x;
-            count++;
-          } while (count < 3);
+            counter2++;
+          } while (counter2 < wholeSheet.length);
         });
       });
-      count++;
+      counter1++;
     }
 
     wholeSheet.forEach((rows, ri) => {
