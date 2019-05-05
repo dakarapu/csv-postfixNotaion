@@ -7,7 +7,7 @@ describe("Files - Unit Test", () => {
   2 3 11 + 5 - *,7   2     /,*
     7  + -,10,`;
 
-  let buf = Buffer.from(str, "utf8");
+  //let buf = Buffer.from(str, "utf8");
 
   let req = [
     "\r\n14,3.5,14",

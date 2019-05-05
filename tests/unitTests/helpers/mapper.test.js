@@ -6,13 +6,6 @@ import {
 
 describe("Mapper - Unit Test", () => {
   let exp = "a1";
-  let evaExp = [
-    ["3 11 +", "7   2     /", "3 11 +"],
-    ["", "", "5  1  2    +    4  *  +   3   -"],
-    ["2 3 11 + 5 - *", "7   2     /", "*"],
-    ["  7  + -", "10", ""],
-    [""]
-  ];
   let map = [
     ["3 11 +", "b3", "a1 "],
     ["", "", "5  1  2    +    4  *  +   3   -"],
@@ -26,7 +19,7 @@ describe("Mapper - Unit Test", () => {
   2 3 11 + 5 - *,7   2     /,*
     7  + -,10,`;
 
-  var buf = Buffer.from(str, "utf8");
+  let buf = Buffer.from(str, "utf8");
 
   it("Successfull parseCellPosition function", () => {
     const data = parseCellPosition(exp);
@@ -39,7 +32,7 @@ describe("Mapper - Unit Test", () => {
     });
   });
 
-  it("should trow error when empty expression string passed", async () => {
+  it("should throw error when empty expression string passed", async () => {
     try {
       await mapping([]);
     } catch (e) {
@@ -47,7 +40,7 @@ describe("Mapper - Unit Test", () => {
     }
   });
 
-  it("should trow error when no expression string passed", async () => {
+  it("should throw error when no expression string passed", async () => {
     try {
       await mapping(null);
     } catch (e) {
@@ -61,7 +54,7 @@ describe("Mapper - Unit Test", () => {
     });
   });
 
-  it("should trow error when no expression string passed", async () => {
+  it("should throw error when no expression string passed", async () => {
     try {
       await trimExpressions(undefined);
     } catch (e) {
