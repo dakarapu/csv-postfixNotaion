@@ -2,7 +2,9 @@ import "@babel/polyfill";
 import app from "../../src/app";
 
 beforeAll(() => {
-  process.argv = ["", "", "input.csv", "output.csv"];
+  let a = __dirname + "/input_test.csv";
+  let b = __dirname + "/output_test.csv";
+  process.argv = ["", "", a, b];
 });
 
 afterEach(() => {

@@ -1,3 +1,4 @@
+import path from "path";
 import { readFile, writeFile } from "../../../src/helpers/files";
 
 describe("Files - Unit Test", () => {
@@ -6,9 +7,9 @@ describe("Files - Unit Test", () => {
   2 3 11 + 5 - *,7   2     /,*
     7  + -,10,`;
 
-  var buf = Buffer.from(str, "utf8");
+  let buf = Buffer.from(str, "utf8");
 
-  var req = [
+  let req = [
     "\r\n14,3.5,14",
     "\r\n,,14",
     "\r\n18,3.5,#ERR",
@@ -16,15 +17,17 @@ describe("Files - Unit Test", () => {
     "\r\n"
   ];
   it("readFile should successfully read input file", () => {
-    return readFile("./input.csv").then(res => {
-      expect(res).toHaveLength(93);
+    return readFile(path.resolve(__dirname, "../input_test.csv")).then(res => {
+      expect(res).toHaveLength(94);
     });
   });
 
   it("writeFile should successfully write output file", () => {
-    return writeFile("./output.csv", req).then(res => {
-      expect(res).toHaveLength(5);
-    });
+    return writeFile(path.resolve(__dirname, "../output_test.csv"), req).then(
+      res => {
+        expect(res).toHaveLength(5);
+      }
+    );
   });
 
   it("writeFile should throw error for no filename as input", async () => {

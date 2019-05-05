@@ -21,7 +21,7 @@ const app = async () => {
     console.log(
       "\n******************** Final Response *********************\n"
     );
-    console.table(result);
+    console.log(result);
   } catch (e) {
     console.error("Received Error response:", e);
     process.exit(1);
