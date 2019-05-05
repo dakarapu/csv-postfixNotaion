@@ -17,9 +17,3 @@
   `start: node bin/dev input.csv output.csv`
 - Unit Tests can be run using `npm run test` command, separate files have been used for testing purpose.
 - Code coverage can be checked using `npm run test:coverage`, currently it is 100% covered.
-
-# Limitations
-
-- There are few limitations in this app implementation:
-  ex: when the combination of cell position is aa2, this implementation cannot identify the cell.
-- Need to improve tests suit.
